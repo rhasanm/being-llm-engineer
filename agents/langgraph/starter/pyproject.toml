@@ -1,0 +1,87 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "starter"
+dynamic = ["version"]
+description = ''
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "rhasanm", email = "hasanrakibul.masum@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+	"langgraph",
+	"langsmith",
+	"langchain_ollama",
+	"ipython",
+	"mypy>=1.0.0",
+	"pytest",
+	"ruff"
+]
+
+[project.urls]
+Documentation = "https://github.com/rhasanm/starter#readme"
+Issues = "https://github.com/rhasanm/starter/issues"
+Source = "https://github.com/rhasanm/starter"
+
+[tool.hatch.version]
+path = "src/starter/__about__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0"
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/starter tests}"
+
+[tool.hatch.envs.default.scripts]
+start = "python src/starter/main.py"
+
+[tool.coverage.run]
+source_pkgs = ["starter", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/starter/__about__.py",
+]
+
+[tool.coverage.paths]
+starter = ["src/starter", "*/starter/src/starter"]
+tests = ["tests", "*/starter/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.pyright]
+executionEnvironments = [{ root = "src" }]
+venvPath = ".hatch"
+venv = "dev"
+
+[tool.hatch.envs.dev]
+python = "3.11"
+
+[tool.hatch.envs.dev.scripts]
+check = [
+  "pytest -xvv --ff",
+  "ruff format .",
+  "ruff check .",
+]
