@@ -28,6 +28,8 @@ dependencies = [
 	"langgraph",
 	"langsmith",
 	"langchain_ollama",
+	"tavily-python",
+	"langchain_community",
 	"ipython",
 	"mypy>=1.0.0",
 	"pytest",
